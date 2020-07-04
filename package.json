@@ -1,0 +1,31 @@
+{
+  "name": "unix-ax25",
+  "version": "0.0.1",
+  "description": "Library to allow Node.JS to interface with the native AX25 networking stack in Linux",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjlocat/unix-ax25-js.git"
+  },
+  "keywords": [
+    "nodejs",
+    "ax25",
+    "linux"
+  ],
+  "author": "Michael Locatelli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mjlocat/unix-ax25-js/issues"
+  },
+  "homepage": "https://github.com/mjlocat/unix-ax25-js#readme",
+  "devDependencies": {
+    "node-gyp": "^7.0.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^3.0.0"
+  }
+}
