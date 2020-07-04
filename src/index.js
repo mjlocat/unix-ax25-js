@@ -7,32 +7,32 @@ class UnixAX25 extends EventEmitter {
     this.socket = axsocket.createAX25Socket();
     this.selectTimeout = 0;
     this.listening = false;
+    this.timer = 0;
     this.UIlisten = this.UIlisten.bind(this);
   }
 
-  startUIListener(timeout = 0) {
-    this.selectTimeout = timeout * 1000; // NB: C function takes microseconds, but we pass milliseconds
+  startUIListener(timeout = 500) {
+    this.selectTimeout = timeout;
     this.listening = true;
     this.UIlisten();
   }
 
   stopUIListener() {
     this.listening = false;
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   UIlisten() {
-    if (axsocket.selectReadSocket(this.socket, this.selectTimeout)) {
+    if (axsocket.selectReadSocket(this.socket, 0)) {
       const packet = axsocket.readAndDecodePacket(this.socket);
       this.emit('data', packet);
     }
     if (this.listening) {
-      process.nextTick(this.UIlisten);
+      this.timer = setTimeout(this.UIlisten, this.selectTimeout);
     }
   }
 }
 
 module.exports = UnixAX25;
-// module.exports = {
-//   createAX25Socket: axsocket.createAX25Socket,
-//   readAndDecodePacket: axsocket.readAndDecodePacket
-// };
