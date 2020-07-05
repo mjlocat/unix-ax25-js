@@ -27,6 +27,7 @@ class UnixAX25 extends EventEmitter {
   UIlisten() {
     if (axsocket.selectReadSocket(this.socket, 0)) {
       const packet = axsocket.readAndDecodePacket(this.socket);
+      packet.received = new Date();
       this.emit('data', packet);
     }
     if (this.listening) {

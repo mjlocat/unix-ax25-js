@@ -64,6 +64,7 @@ Subscribe to the `data` event to receive a packet in the following format:
     digi: String,     // The callsign and SSID of specified digipeters
     repeated: Boolean // If true, the specified digipeter has repeated this packet
   }],
+  received: Date,     // The date/time the packet was received
   data: String        // The payload of the packet
 }
 ```
