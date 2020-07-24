@@ -4,6 +4,7 @@ const axsocket = require('../build/Release/axsocket.node');
 class UnixAX25 extends EventEmitter {
   constructor() {
     super();
+    this.ports = axsocket.enumeratePorts();
     this.socket = axsocket.createAX25Socket();
     this.selectTimeout = 0;
     this.listening = false;
@@ -33,6 +34,11 @@ class UnixAX25 extends EventEmitter {
     if (this.listening) {
       this.timer = setTimeout(this.UIlisten, this.selectTimeout);
     }
+  }
+
+  writeUISocket(packet) {
+    console.log(`writing packet: ${JSON.stringify(packet)}`);
+    return axsocket.writeUISocket(packet.from, packet.to, packet.data, packet.via);
   }
 }
 
