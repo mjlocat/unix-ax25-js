@@ -5,7 +5,8 @@
     "cflags_cc!": [ "-fno-exceptions", "-lax25" ],
     "sources": [
       "src/cppsrc/main.cpp",
-      "src/cppsrc/axsocket.cpp"
+      "src/cppsrc/axsocket.cpp",
+      "src/cppsrc/ax25structures.cpp"
     ],
     'include_dirs': [
       "<!@(node -p \"require('node-addon-api').include\")"

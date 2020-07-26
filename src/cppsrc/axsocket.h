@@ -1,5 +1,6 @@
 #ifndef _AXSOCKET_
 #define _AXSOCKET_
+#include "ax25structures.h"
 #include <napi.h>
 
 #define CALLSIGN_SIZE 15
@@ -7,29 +8,7 @@
 #define BUFFER_SIZE 1500
 
 namespace axsocket {
-  struct ax25via {
-    char digi[CALLSIGN_SIZE];
-    bool repeated;
-  };
-
-  struct ax25datagram {
-
-    char from[CALLSIGN_SIZE];
-    char to[CALLSIGN_SIZE];
-    ax25via via[MAX_DIGI];
-    char data[BUFFER_SIZE];
-  };
-
-  struct axports {
-    char *portName;
-    // char *deviceName;
-    char *portCallsign;
-    char *portDevice;
-  };
-
-  char *decodeCallsign(char *buf, char *data);
-
-  struct axports *enumeratePorts();
+  std::vector<axport> enumeratePorts();
   Napi::Array enumeratePortsWrap(const Napi::CallbackInfo& info);
 
   int createAX25Socket();
@@ -41,10 +20,12 @@ namespace axsocket {
   size_t readSocket(int sock, char* buffer);
   Napi::Object readSocketWrap(const Napi::CallbackInfo& info);
 
-  void decodePacket(char *data, size_t size, ax25datagram *buffer);
+  ax25datagram decodePacket(char *data, size_t size);
   Napi::Object readAndDecodePacket(const Napi::CallbackInfo& info);
 
-  int writeUISocket(std::string from, std::string to, std::string data, std::vector<std::string> via);
+  std::string buildDestStr(axsocket::ax25datagram packet);
+  
+  ssize_t writeUISocket(ax25datagram packet);
   Napi::Number writeUISocketWrap(const Napi::CallbackInfo& info);
   
   Napi::Object Init(Napi::Env env, Napi::Object exports);

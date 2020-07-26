@@ -37,7 +37,6 @@ class UnixAX25 extends EventEmitter {
   }
 
   writeUISocket(packet) {
-    console.log(`writing packet: ${JSON.stringify(packet)}`);
     return axsocket.writeUISocket(packet.from, packet.to, packet.data, packet.via);
   }
 }
