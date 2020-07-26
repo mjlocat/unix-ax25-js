@@ -206,7 +206,7 @@ Napi::Object axsocket::readAndDecodePacket(const Napi::CallbackInfo& info) {
 
 std::string axsocket::buildDestStr(axsocket::ax25datagram packet) {
   std::string destStr = packet.getTo();
-  std::vector<axsocket::ax25via> digis;
+  std::vector<axsocket::ax25via> digis = packet.getDigis();
 
   for (unsigned int i = 0; i < digis.size(); i++) {
     destStr += " " + digis[i].getDigiCallsign();
